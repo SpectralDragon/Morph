@@ -20,7 +20,7 @@ public protocol NavigationViewStyle {
     typealias Configuration = NavigationViewStyleConfiguration
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     var navigationViewStyle: AnyNavigationViewStyle? {
         get { self[NavigationViewStyleKey.self] }
         set { self[NavigationViewStyleKey.self] = newValue }

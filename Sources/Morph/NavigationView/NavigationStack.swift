@@ -10,27 +10,28 @@ import SwiftUI
 // Main idea using stack representation was taken from https://github.com/biobeats/swiftui-navigation-stack/blob/master/Sources/NavigationStack/NavigationStack.swift
 // Thanks!
 
-enum NavigationType {
-    case push
-    case pop
-}
-
-enum PopDestination {
-    case previous
-    case root
-    case view(withId: String)
-}
-
-class NavigationStack: ObservableObject {
+public class NavigationStack: ObservableObject {
     
-    struct Page: View, Equatable, Identifiable {
+    public enum NavigationType {
+        case push
+        case pop
+    }
+
+    public enum PopDestination {
+        case previous
+        case root
+        case view(withId: String)
+    }
+
+    
+    public struct Page: View, Equatable, Identifiable {
         
-        static func == (lhs: Self, rhs: Self) -> Bool {
+        public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.id == rhs.id
         }
         
-        let id: String
-        var body: AnyView
+        public let id: String
+        public var body: AnyView
     }
     
     private(set) var navigationType = NavigationType.push
@@ -41,11 +42,11 @@ class NavigationStack: ObservableObject {
         }
     }
     
-    var canPopUp: Bool {
+    public var canPopUp: Bool {
         return !self.stack.pages.isEmpty
     }
     
-    @Published var currentPage: Page?
+    @Published public var currentPage: Page?
     
     public func push<Element: View>(_ element: Element, withId identifier: String? = nil) {
         withAnimation {
@@ -103,11 +104,11 @@ class NavigationStack: ObservableObject {
     
 }
 
-struct NavigationStackKey: EnvironmentKey {
-    static var defaultValue: NavigationStack?
+public struct NavigationStackKey: EnvironmentKey {
+    public static var defaultValue: NavigationStack?
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     var navigationStack: NavigationStack? {
         get { self[NavigationStackKey.self] }
         set { self[NavigationStackKey.self] = newValue }
